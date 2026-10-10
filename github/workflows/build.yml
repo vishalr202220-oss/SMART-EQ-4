@@ -1,0 +1,20 @@
+name: Build SMART EQ PRODUCERTOY
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: SMART-EQ-PRODUCERTOY-windows
+          path: build/SmartEQ_artefacts/Release/VST3
